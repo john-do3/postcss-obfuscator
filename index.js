@@ -164,14 +164,18 @@ module.exports = (options = {}) => {
               // Generate new className
               let oldClassName = "." + className;
               let newClassName;
-              if (classIgnore.includes(className) || classMethod == "none") {
+              if (classMethod == "none") {
                 newClassName = className;
               } else if (classMethod == "simple") {
                 newClassName = simplifyString(className);
               } else {
                 newClassName = getRandomName(length);
               }
-              newClassName = `.${classPrefix}${newClassName}${classSuffix}`;
+              
+              if (!classIgnore.includes(className))
+                newClassName = `.${classPrefix}${newClassName}${classSuffix}`;
+              else
+                newClassName = `.${newClassName}`;
 
               // If ClassName already exist replace with its value else generate new : the should have same name.
               if (jsonData.hasOwnProperty(oldClassName)) {
